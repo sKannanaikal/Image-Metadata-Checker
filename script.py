@@ -9,11 +9,9 @@ NUMOFIMAGES = 0
 
 def locateImages(url):
 	print('[+] Searching {website} for all images'.format(website=url))
-	
 	website = urlib2.urlopen(url).read()
 	soup = BeautifulSoup(website)
 	images = soup.findAll('img')
-
 	return images
 
 def downloadImage(image):
@@ -26,7 +24,6 @@ def downloadImage(image):
 		localCopy.write(imageContent)
 		localCopy.close()
 		return imageName
-	
 	except:
 		return None
 
@@ -46,17 +43,12 @@ def checkForMetaData(imageName):
 def main():
 	command = optparse.OptionParser('usage%prog -u <target url>')
 	command.add_option('-u', dest='target', type='string', help='specify the target url you want to download from')
-	
 	url = command.target
-	
 	images = locateImages(url)
-
 	for image in images:
 		imageName = downloadImage(image)
 		checkForMetaData(imageName)
-
 	print('[+] A total of {count} images were found on {website}! They have all been reviewed for inclusion of metadata!'.format(count=NUMOFIMAGES, website=url))
-
 
 if __name__ == "__main__":
 	main()
